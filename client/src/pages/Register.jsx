@@ -36,70 +36,92 @@ const Register = () => {
     };
 
     return (
-        <div className="mx-auto max-w-5xl overflow-hidden rounded-[2rem] border border-slate-200 bg-white shadow-[0_24px_80px_rgba(15,23,42,0.12)] md:grid md:grid-cols-[0.9fr_1fr]">
-            <div className="bg-gradient-to-br from-orange-500 via-amber-400 to-cyan-300 p-8 text-slate-950 md:p-10">
-                <div className="mb-6 inline-flex rounded-full bg-white/50 px-4 py-2 text-xs font-bold uppercase tracking-[0.3em]">
-                    <FaUserPlus />
-                    Create account
+        <div className="mx-auto max-w-5xl overflow-hidden rounded-[2.5rem] border border-white/5 bg-slate-900/40 shadow-[0_24px_80px_rgba(0,0,0,0.55)] backdrop-blur-xl md:grid md:grid-cols-[0.95fr_1.05fr] animate-fade-in">
+            {/* Visual Sidebar */}
+            <div className="bg-gradient-to-br from-orange-500 via-amber-500 to-violet-600 p-8 text-slate-950 md:p-10 flex flex-col justify-between relative overflow-hidden shadow-2xl">
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_right,_rgba(255,255,255,0.15),_transparent_35%)] pointer-events-none" />
+                <div className="relative z-10 space-y-6">
+                    <div className="inline-flex rounded-full bg-white/20 border border-white/35 px-4 py-2 text-xs font-bold uppercase tracking-[0.3em] text-slate-950">
+                        <FaUserPlus />
+                        Create account
+                    </div>
+                    <h2 className="text-4xl font-extrabold leading-tight tracking-tight" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>
+                        Join the fastest event booking flow.
+                    </h2>
+                    <p className="max-w-md text-sm leading-6 text-slate-900/80">
+                        Register once, verify with OTP, and get access to a cleaner dashboard for upcoming events and bookings.
+                    </p>
                 </div>
-                <h2 className="text-4xl font-black leading-tight" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>Join the fastest event booking flow.</h2>
-                <p className="mt-5 max-w-md text-sm leading-7 text-slate-800/90">Register once, verify with OTP, and get access to a cleaner dashboard for upcoming events and bookings.</p>
-                <div className="mt-8 grid gap-3 text-sm font-medium text-slate-900/80">
-                    <div className="rounded-2xl bg-white/40 p-4 backdrop-blur">Secure OTP registration</div>
-                    <div className="rounded-2xl bg-white/40 p-4 backdrop-blur">Responsive mobile-first UI</div>
-                    <div className="rounded-2xl bg-white/40 p-4 backdrop-blur">Dashboard and admin access</div>
+                <div className="relative z-10 grid gap-4 text-xs font-bold text-slate-900/90 mt-10">
+                    <div className="rounded-2xl bg-white/20 border border-white/10 p-4 shadow-sm backdrop-blur-md">
+                        Secure OTP registration
+                    </div>
+                    <div className="rounded-2xl bg-white/20 border border-white/10 p-4 shadow-sm backdrop-blur-md">
+                        Responsive mobile-first UI
+                    </div>
+                    <div className="rounded-2xl bg-white/20 border border-white/10 p-4 shadow-sm backdrop-blur-md">
+                        Dashboard & Admin Access
+                    </div>
                 </div>
             </div>
 
-            <div className="p-8 md:p-12">
+            {/* Registration Form Container */}
+            <div className="p-8 md:p-14 flex flex-col justify-center bg-slate-900/20">
                 <div className="mb-8 text-center md:text-left">
-                    <div className="mb-3 inline-flex items-center gap-2 rounded-full bg-slate-900/5 px-4 py-2 text-xs font-bold uppercase tracking-[0.3em] text-slate-600">
+                    <div className="mb-3.5 inline-flex items-center gap-2 rounded-full border border-orange-500/20 bg-orange-500/10 px-4 py-2 text-xs font-bold uppercase tracking-[0.3em] text-orange-400">
                         <FaUserPlus />
                         Sign up
                     </div>
-                    <h2 className="text-3xl font-black text-slate-950" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>Create an Account</h2>
-                    <p className="mt-2 text-slate-500">Join Eventora today</p>
+                    <h2 className="text-3xl font-extrabold tracking-tight text-white" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>Create Account</h2>
+                    <p className="mt-2 text-sm text-slate-400">Join Eventora today</p>
                 </div>
 
-                {error && <div className="mb-6 rounded-2xl border border-red-200 bg-red-50 p-4 text-center text-red-700">{error}</div>}
+                {error && (
+                    <div className="mb-6 rounded-2xl border border-red-500/20 bg-red-950/20 p-4 text-center text-sm font-semibold text-red-400 animate-pulse">
+                        {error}
+                    </div>
+                )}
 
                 <form onSubmit={handleSubmit} className="space-y-5">
                     {!showOTP ? (
                         <>
                             <div>
-                                <label className="mb-2 block text-sm font-semibold text-slate-700">Full Name</label>
+                                <label className="mb-2 block text-xs font-bold uppercase tracking-[0.2em] text-slate-400">Full Name</label>
                                 <div className="relative">
-                                    <FaUserPlus className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" />
+                                    <FaUserPlus className="absolute left-4 top-1/2 -translate-y-1/2 text-orange-400 text-sm" />
                                     <input
                                         type="text"
                                         required
-                                        className="w-full rounded-2xl border border-slate-300 bg-white px-12 py-3.5 outline-none transition focus:border-slate-900"
+                                        placeholder="Arnav Saxena"
+                                        className="w-full rounded-2xl border border-white/10 bg-slate-950/40 px-12 py-3.5 text-slate-100 placeholder:text-slate-600 outline-none transition focus:border-orange-500/50 focus:ring-4 focus:ring-orange-500/10"
                                         value={name}
                                         onChange={(e) => setName(e.target.value)}
                                     />
                                 </div>
                             </div>
                             <div>
-                                <label className="mb-2 block text-sm font-semibold text-slate-700">Email Address</label>
+                                <label className="mb-2 block text-xs font-bold uppercase tracking-[0.2em] text-slate-400">Email Address</label>
                                 <div className="relative">
-                                    <FaEnvelope className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" />
+                                    <FaEnvelope className="absolute left-4 top-1/2 -translate-y-1/2 text-orange-400 text-sm" />
                                     <input
                                         type="email"
                                         required
-                                        className="w-full rounded-2xl border border-slate-300 bg-white px-12 py-3.5 outline-none transition focus:border-slate-900"
+                                        placeholder="name@domain.com"
+                                        className="w-full rounded-2xl border border-white/10 bg-slate-950/40 px-12 py-3.5 text-slate-100 placeholder:text-slate-600 outline-none transition focus:border-orange-500/50 focus:ring-4 focus:ring-orange-500/10"
                                         value={email}
                                         onChange={(e) => setEmail(e.target.value)}
                                     />
                                 </div>
                             </div>
                             <div>
-                                <label className="mb-2 block text-sm font-semibold text-slate-700">Password</label>
+                                <label className="mb-2 block text-xs font-bold uppercase tracking-[0.2em] text-slate-400">Password</label>
                                 <div className="relative">
-                                    <FaLock className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" />
+                                    <FaLock className="absolute left-4 top-1/2 -translate-y-1/2 text-orange-400 text-sm" />
                                     <input
                                         type="password"
                                         required
-                                        className="w-full rounded-2xl border border-slate-300 bg-white px-12 py-3.5 outline-none transition focus:border-slate-900"
+                                        placeholder="••••••••"
+                                        className="w-full rounded-2xl border border-white/10 bg-slate-950/40 px-12 py-3.5 text-slate-100 placeholder:text-slate-600 outline-none transition focus:border-orange-500/50 focus:ring-4 focus:ring-orange-500/10"
                                         value={password}
                                         onChange={(e) => setPassword(e.target.value)}
                                     />
@@ -107,22 +129,24 @@ const Register = () => {
                             </div>
                         </>
                     ) : (
-                        <div>
-                            <p className="mb-4 rounded-2xl border border-emerald-200 bg-emerald-50 p-4 text-sm text-emerald-700">
+                        <div className="space-y-4">
+                            <div className="rounded-2xl border border-emerald-500/20 bg-emerald-950/20 p-4 text-center text-sm font-semibold text-emerald-400">
                                 An OTP has been sent to your email. Please verify your account.
-                            </p>
-                            <label className="mb-2 block text-sm font-semibold text-slate-700">Verification Code (OTP)</label>
-                            <div className="relative">
-                                <FaKey className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" />
-                                <input
-                                    type="text"
-                                    required
-                                    placeholder="6-digit code"
-                                    className="w-full rounded-2xl border border-slate-300 bg-white px-12 py-3.5 text-center text-lg font-bold tracking-[0.4em] outline-none transition focus:border-slate-900"
-                                    value={otp}
-                                    onChange={(e) => setOtp(e.target.value)}
-                                    maxLength="6"
-                                />
+                            </div>
+                            <div>
+                                <label className="mb-2.5 block text-xs font-bold uppercase tracking-[0.2em] text-slate-400 text-center">Verification Code (OTP)</label>
+                                <div className="relative">
+                                    <FaKey className="absolute left-5 top-1/2 -translate-y-1/2 text-orange-400 text-sm" />
+                                    <input
+                                        type="text"
+                                        required
+                                        placeholder="0 0 0 0 0 0"
+                                        className="w-full rounded-2xl border border-white/10 bg-slate-950/40 py-4 pl-12 pr-4 text-center text-xl font-bold tracking-[0.5em] text-orange-400 placeholder:text-slate-700 outline-none transition focus:border-orange-500/50 focus:ring-4 focus:ring-orange-500/10"
+                                        value={otp}
+                                        onChange={(e) => setOtp(e.target.value)}
+                                        maxLength="6"
+                                    />
+                                </div>
                             </div>
                         </div>
                     )}
@@ -130,15 +154,15 @@ const Register = () => {
                     <button
                         type="submit"
                         disabled={loading}
-                        className="mt-4 w-full rounded-2xl bg-slate-950 py-3.5 font-bold text-white transition hover:bg-orange-500 disabled:cursor-not-allowed disabled:opacity-70"
+                        className="mt-4 w-full rounded-2xl bg-gradient-to-r from-orange-500 to-amber-500 py-4 font-bold text-slate-950 shadow-lg shadow-orange-500/20 transition duration-200 hover:scale-[1.01] hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-50"
                     >
-                        {loading ? 'Processing...' : (showOTP ? 'Verify & Complete' : 'Sign Up')}
+                        {loading ? 'Creating account...' : (showOTP ? 'Verify & Complete' : 'Sign Up')}
                     </button>
                 </form>
 
                 {!showOTP && (
-                    <p className="mt-6 text-center text-slate-600 md:text-left">
-                        Already have an account? <Link to="/login" className="font-bold text-slate-950 underline decoration-slate-300 underline-offset-4 hover:text-orange-600">Sign in</Link>
+                    <p className="mt-8 text-center text-slate-400 md:text-left text-sm">
+                        Already have an account? <Link to="/login" className="font-bold text-orange-400 hover:text-orange-300 hover:underline transition">Sign in</Link>
                     </p>
                 )}
             </div>
