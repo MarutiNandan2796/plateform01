@@ -27,7 +27,7 @@ const Home = () => {
     };
 
     return (
-        <div className="flex flex-col min-h-screen space-y-12 animate-fade-in text-slate-100">
+        <div className="flex flex-col min-h-screen space-y-12 animate-fade-in-scale text-slate-100">
             {/* Hero Section */}
             <section className="relative overflow-hidden rounded-[2.5rem] border border-white/5 bg-slate-950/80 p-8 md:p-14 lg:p-16 shadow-[0_24px_80px_rgba(0,0,0,0.5)]">
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_rgba(249,115,22,0.18),_transparent_35%),radial-gradient(circle_at_bottom_left,_rgba(34,211,238,0.12),_transparent_35%)]" />
@@ -35,34 +35,34 @@ const Home = () => {
                 
                 <div className="relative grid gap-12 lg:grid-cols-[1.2fr_0.8fr]">
                     <div className="space-y-6">
-                        <span className="inline-flex items-center gap-2 rounded-full border border-orange-500/20 bg-orange-500/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.35em] text-orange-400 backdrop-blur-sm">
+                        <span className="inline-flex items-center gap-2 rounded-full border border-orange-500/20 bg-orange-500/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.35em] text-orange-400 backdrop-blur-sm animate-slide-up opacity-0">
                             <FaBolt className="text-orange-400" />
                             Book smarter
                         </span>
-                        <h1 className="text-4xl font-extrabold leading-tight tracking-tight md:text-6xl" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>
-                            Discover events that feel <span className="text-gradient font-black">worth leaving home for</span>.
+                        <h1 className="text-4xl font-extrabold leading-tight tracking-tight md:text-6xl animate-slide-up opacity-0 delay-50" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>
+                            Discover events that feel <span className="text-gradient animate-logo-gradient font-black">worth leaving home for</span>.
                         </h1>
-                        <p className="max-w-xl text-base leading-7 text-slate-400 md:text-lg">
+                        <p className="max-w-xl text-base leading-7 text-slate-400 md:text-lg animate-slide-up opacity-0 delay-100">
                             Browse curated experiences, reserve seats in seconds, and manage everything from a clean dashboard designed for speed.
                         </p>
 
-                        <div className="grid gap-4 sm:grid-cols-3 pt-4">
-                            <div className="rounded-2xl border border-white/5 bg-white/5 p-4 backdrop-blur-sm">
+                        <div className="grid gap-4 sm:grid-cols-3 pt-4 animate-slide-up opacity-0 delay-150">
+                            <div className="rounded-2xl border border-white/5 bg-white/5 p-4 backdrop-blur-sm transition duration-300 hover:border-orange-500/20">
                                 <div className="mb-2 flex items-center gap-2 text-orange-400"><FaStar /> <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-slate-400">Curated</span></div>
                                 <div className="text-xl font-bold">Premium Picks</div>
                             </div>
-                            <div className="rounded-2xl border border-white/5 bg-white/5 p-4 backdrop-blur-sm">
+                            <div className="rounded-2xl border border-white/5 bg-white/5 p-4 backdrop-blur-sm transition duration-300 hover:border-cyan-500/20">
                                 <div className="mb-2 flex items-center gap-2 text-cyan-400"><FaUsers /> <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-slate-400">Community</span></div>
                                 <div className="text-xl font-bold">Live Audiences</div>
                             </div>
-                            <div className="rounded-2xl border border-white/5 bg-white/5 p-4 backdrop-blur-sm">
+                            <div className="rounded-2xl border border-white/5 bg-white/5 p-4 backdrop-blur-sm transition duration-300 hover:border-violet-500/20">
                                 <div className="mb-2 flex items-center gap-2 text-violet-400"><FaShieldAlt /> <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-slate-400">Secure</span></div>
                                 <div className="text-xl font-bold">OTP Protected</div>
                             </div>
                         </div>
                     </div>
 
-                    <div className="self-center rounded-3xl border border-white/5 bg-slate-900/60 p-6 shadow-2xl backdrop-blur-xl md:p-8">
+                    <div className="self-center rounded-3xl border border-white/5 bg-slate-900/60 p-6 shadow-2xl backdrop-blur-xl md:p-8 animate-fade-in-scale opacity-0 delay-200">
                         <div className="mb-5 flex items-center justify-between">
                             <div>
                                 <div className="text-xs font-bold uppercase tracking-[0.3em] text-slate-500">Search</div>
@@ -98,21 +98,21 @@ const Home = () => {
 
             {/* Features Row */}
             <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-                <div className="rounded-3xl border border-white/5 bg-slate-900/40 p-6 shadow-sm hover:border-white/15 transition duration-300">
+                <div className="rounded-3xl border border-white/5 bg-slate-900/40 p-6 shadow-sm hover:border-white/15 hover:scale-[1.01] transition duration-300 animate-slide-up opacity-0 delay-100">
                     <div className="mb-5 inline-flex rounded-2xl bg-orange-500/10 p-4 text-2xl text-orange-400">
                         <FaRegClock />
                     </div>
                     <h3 className="mb-2 text-xl font-bold text-slate-100">Fast Booking</h3>
                     <p className="text-sm leading-6 text-slate-400">Reserve in a few clicks with a clean flow built to reduce friction.</p>
                 </div>
-                <div className="rounded-3xl border border-white/5 bg-slate-900/40 p-6 shadow-sm hover:border-white/15 transition duration-300">
+                <div className="rounded-3xl border border-white/5 bg-slate-900/40 p-6 shadow-sm hover:border-white/15 hover:scale-[1.01] transition duration-300 animate-slide-up opacity-0 delay-200">
                     <div className="mb-5 inline-flex rounded-2xl bg-cyan-500/10 p-4 text-2xl text-cyan-400">
                         <FaTicketAlt />
                     </div>
                     <h3 className="mb-2 text-xl font-bold text-slate-100">Seamless Access</h3>
                     <p className="text-sm leading-6 text-slate-400">Track events, bookings, and status from one dashboard.</p>
                 </div>
-                <div className="rounded-3xl border border-white/5 bg-slate-900/40 p-6 shadow-sm hover:border-white/15 transition duration-300">
+                <div className="rounded-3xl border border-white/5 bg-slate-900/40 p-6 shadow-sm hover:border-white/15 hover:scale-[1.01] transition duration-300 animate-slide-up opacity-0 delay-300">
                     <div className="mb-5 inline-flex rounded-2xl bg-violet-500/10 p-4 text-2xl text-violet-400">
                         <FaShieldAlt />
                     </div>
@@ -140,11 +140,15 @@ const Home = () => {
                 <div className="text-center py-20 text-xl text-slate-500">No events found matching your search.</div>
             ) : (
                 <div className="grid grid-cols-1 gap-8 md:grid-cols-2 xl:grid-cols-3">
-                    {events.map(event => (
-                        <div key={event._id} className="glass-card glass-card-hover group flex flex-col overflow-hidden rounded-[2rem] shadow-lg">
+                    {events.map((event, index) => (
+                        <div 
+                            key={event._id} 
+                            style={{ animationDelay: `${index * 80}ms` }}
+                            className="glass-card glass-card-hover group flex flex-col overflow-hidden rounded-[2rem] shadow-lg animate-slide-up opacity-0"
+                        >
                             <div className="relative h-56 overflow-hidden bg-slate-950">
                                 {event.image ? (
-                                    <img src={event.image} alt={event.title} className="h-full w-full object-cover transition duration-500 group-hover:scale-105 group-hover:brightness-95" />
+                                    <img src={event.image} alt={event.title} className="h-full w-full object-cover transition duration-550 group-hover:scale-105 group-hover:brightness-95" />
                                 ) : (
                                     <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-slate-800 to-slate-950 text-2xl font-bold text-slate-400">
                                         {event.category || 'Event'}

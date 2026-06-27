@@ -64,7 +64,7 @@ const EventDetail = () => {
     const isSoldOut = event.availableSeats <= 0;
 
     return (
-        <div className="mx-auto max-w-6xl overflow-hidden rounded-[2.5rem] border border-white/5 bg-slate-900/40 shadow-[0_24px_80px_rgba(0,0,0,0.55)] backdrop-blur-xl animate-fade-in text-slate-100">
+        <div className="mx-auto max-w-6xl overflow-hidden rounded-[2.5rem] border border-white/5 bg-slate-950/80 shadow-[0_24px_80px_rgba(0,0,0,0.55)] backdrop-blur-xl animate-fade-in-scale text-slate-100">
             {/* Immersive Image Banner */}
             <div className="relative h-[300px] overflow-hidden bg-slate-950 md:h-[420px]">
                 {event.image ? (
@@ -75,13 +75,13 @@ const EventDetail = () => {
                     </div>
                 )}
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/30 to-transparent" />
-                <div className="absolute left-6 top-6 inline-flex items-center gap-2 rounded-full border border-orange-500/20 bg-orange-500/20 px-4 py-2 text-xs font-bold uppercase tracking-[0.35em] text-orange-400 backdrop-blur-md">
+                <div className="absolute left-6 top-6 inline-flex items-center gap-2 rounded-full border border-orange-500/20 bg-orange-500/20 px-4 py-2 text-xs font-bold uppercase tracking-[0.35em] text-orange-400 backdrop-blur-md animate-slide-up opacity-0">
                     <FaTicketAlt className="text-orange-400" />
                     {event.category}
                 </div>
                 <div className="absolute bottom-6 left-6 right-6 max-w-4xl space-y-3">
-                    <h1 className="text-4xl font-extrabold leading-tight tracking-tight md:text-6xl text-white" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>{event.title}</h1>
-                    <p className="max-w-3xl text-sm leading-6 text-slate-300 md:text-base">{event.description}</p>
+                    <h1 className="text-4xl font-extrabold leading-tight tracking-tight md:text-6xl text-white animate-slide-up opacity-0 delay-50" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>{event.title}</h1>
+                    <p className="max-w-3xl text-sm leading-6 text-slate-300 md:text-base animate-slide-up opacity-0 delay-100">{event.description}</p>
                 </div>
             </div>
 
@@ -89,28 +89,28 @@ const EventDetail = () => {
                 {/* Left Info Panel */}
                 <div className="space-y-6">
                     <div className="grid gap-4 sm:grid-cols-2">
-                        <div className="rounded-2xl border border-white/5 bg-white/5 p-5 shadow-sm">
+                        <div className="rounded-2xl border border-white/5 bg-white/5 p-5 shadow-sm animate-slide-up opacity-0 delay-100 transition hover:border-white/10">
                             <div className="text-[10px] font-bold uppercase tracking-[0.35em] text-slate-500">Date</div>
                             <div className="mt-2.5 flex items-center gap-3 text-base font-bold text-slate-200">
                                 <FaCalendarAlt className="text-orange-400 text-lg" />
                                 {new Date(event.date).toLocaleDateString(undefined, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
                             </div>
                         </div>
-                        <div className="rounded-2xl border border-white/5 bg-white/5 p-5 shadow-sm">
+                        <div className="rounded-2xl border border-white/5 bg-white/5 p-5 shadow-sm animate-slide-up opacity-0 delay-150 transition hover:border-white/10">
                             <div className="text-[10px] font-bold uppercase tracking-[0.35em] text-slate-500">Location</div>
                             <div className="mt-2.5 flex items-center gap-3 text-base font-bold text-slate-200">
                                 <FaMapMarkerAlt className="text-cyan-400 text-lg" />
                                 {event.location}
                             </div>
                         </div>
-                        <div className="rounded-2xl border border-white/5 bg-white/5 p-5 shadow-sm">
+                        <div className="rounded-2xl border border-white/5 bg-white/5 p-5 shadow-sm animate-slide-up opacity-0 delay-200 transition hover:border-white/10">
                             <div className="text-[10px] font-bold uppercase tracking-[0.35em] text-slate-500">Ticket Price</div>
                             <div className="mt-2.5 flex items-center gap-3 text-base font-bold text-slate-200">
                                 <FaMoneyBillWave className="text-emerald-400 text-lg" />
-                                {event.ticketPrice === 0 ? <span className="text-emerald-400">Free</span> : <span className="text-gradient">₹{event.ticketPrice}</span>}
+                                {event.ticketPrice === 0 ? <span className="text-emerald-400">Free</span> : <span className="text-gradient font-black">₹{event.ticketPrice}</span>}
                             </div>
                         </div>
-                        <div className="rounded-2xl border border-white/5 bg-white/5 p-5 shadow-sm">
+                        <div className="rounded-2xl border border-white/5 bg-white/5 p-5 shadow-sm animate-slide-up opacity-0 delay-250 transition hover:border-white/10">
                             <div className="text-[10px] font-bold uppercase tracking-[0.35em] text-slate-500">Availability</div>
                             <div className="mt-2.5 flex items-center gap-3 text-base font-bold text-slate-200">
                                 <FaChair className="text-slate-400 text-lg" />
@@ -120,7 +120,7 @@ const EventDetail = () => {
                         </div>
                     </div>
 
-                    <div className="rounded-3xl border border-white/5 bg-gradient-to-br from-slate-950 to-slate-900/60 p-6 shadow-md">
+                    <div className="rounded-3xl border border-white/5 bg-gradient-to-br from-slate-950 to-slate-900/60 p-6 shadow-md animate-slide-up opacity-0 delay-300">
                         <div className="flex items-center gap-3 text-xs font-bold uppercase tracking-[0.35em] text-orange-400">
                             <FaLock className="text-orange-400" />
                             Booking details
@@ -133,20 +133,20 @@ const EventDetail = () => {
                 </div>
 
                 {/* Right Checkout Sidebar */}
-                <aside className="rounded-3xl border border-white/5 bg-slate-950/40 p-6 shadow-[0_20px_50px_rgba(0,0,0,0.3)] md:p-8 flex flex-col justify-between">
+                <aside className="rounded-3xl border border-white/5 bg-slate-950/40 p-6 shadow-[0_20px_50px_rgba(0,0,0,0.3)] md:p-8 flex flex-col justify-between animate-fade-in-scale opacity-0 delay-150">
                     <div className="space-y-6">
                         <div className="flex items-center justify-between">
                             <div>
                                 <div className="text-xs font-bold uppercase tracking-[0.35em] text-orange-500">Book now</div>
                                 <h3 className="text-2xl font-black text-white" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>Ticket Booking</h3>
                             </div>
-                            <div className="rounded-2xl bg-orange-500/10 p-3.5 text-orange-400 shadow-sm">
+                            <div className="rounded-2xl bg-orange-500/10 p-3.5 text-orange-400 shadow-sm animate-float">
                                 <FaTicketAlt className="text-lg" />
                             </div>
                         </div>
 
                         {showOTP && (
-                            <div className="space-y-2">
+                            <div className="space-y-2 animate-slide-up opacity-0">
                                 <label className="block text-xs font-bold uppercase tracking-[0.2em] text-slate-400">Enter OTP to Confirm</label>
                                 <input
                                     type="text"

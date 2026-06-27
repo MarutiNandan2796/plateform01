@@ -17,21 +17,21 @@ const Navbar = () => {
             <div className="container mx-auto px-4 md:px-6">
                 <div className="flex flex-col sm:flex-row justify-between items-center py-4 gap-4">
                     <Link to="/" className="text-white text-2xl font-bold flex items-center gap-3 tracking-tight hover:opacity-95 transition" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>
-                        <span className="flex h-10 w-10 items-center justify-center rounded-2xl bg-gradient-to-br from-orange-500 via-amber-400 to-cyan-300 text-slate-950 shadow-[0_0_20px_rgba(249,115,22,0.35)]">
+                        <span className="flex h-10 w-10 items-center justify-center rounded-2xl bg-gradient-to-br from-orange-500 via-amber-400 to-cyan-300 text-slate-950 shadow-[0_0_20px_rgba(249,115,22,0.35)] animate-float">
                             <FaTicketAlt className="text-lg" />
                         </span>
                         <span className="leading-none">
-                            <span className="text-gradient font-extrabold tracking-tight">Eventora</span>
+                            <span className="text-gradient animate-logo-gradient font-extrabold tracking-tight">Eventora</span>
                             <span className="block text-[10px] font-bold tracking-[0.4em] text-slate-400 uppercase mt-0.5">Premium bookings</span>
                         </span>
                     </Link>
                     <div className="flex items-center gap-3 sm:gap-4">
-                        <Link to="/" className="rounded-full border border-white/10 px-5 py-2 text-sm font-semibold text-slate-300 transition duration-200 hover:border-white/20 hover:bg-white/5 hover:text-white">
+                        <Link to="/" className="expand-link rounded-full border border-white/10 px-5 py-2 text-sm font-semibold text-slate-300 transition duration-200 hover:border-white/20 hover:bg-white/5 hover:text-white">
                             Events
                         </Link>
                         {user ? (
                             <>
-                                <Link to={user.role === 'admin' ? '/admin' : '/dashboard'} className="inline-flex items-center gap-2 rounded-full border border-cyan-500/20 bg-cyan-950/20 px-5 py-2 text-sm font-semibold text-cyan-400 transition duration-200 hover:border-cyan-400/40 hover:bg-cyan-950/40">
+                                <Link to={user.role === 'admin' ? '/admin' : '/dashboard'} className="expand-link inline-flex items-center gap-2 rounded-full border border-cyan-500/20 bg-cyan-950/20 px-5 py-2 text-sm font-semibold text-cyan-400 transition duration-200 hover:border-cyan-400/40 hover:bg-cyan-950/40">
                                     <FaColumns className="text-xs" />
                                     Dashboard
                                 </Link>
@@ -42,7 +42,7 @@ const Navbar = () => {
                             </>
                         ) : (
                             <>
-                                <Link to="/login" className="rounded-full border border-white/10 px-5 py-2 text-sm font-semibold text-slate-300 transition duration-200 hover:border-white/20 hover:bg-white/5 hover:text-white">
+                                <Link to="/login" className="expand-link rounded-full border border-white/10 px-5 py-2 text-sm font-semibold text-slate-300 transition duration-200 hover:border-white/20 hover:bg-white/5 hover:text-white">
                                     Login
                                 </Link>
                                 <Link to="/register" className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-orange-500 to-amber-500 px-5 py-2.5 text-sm font-bold text-slate-950 shadow-[0_4px_15px_rgba(249,115,22,0.25)] transition duration-200 hover:scale-[1.03] hover:brightness-110">
