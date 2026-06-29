@@ -19,7 +19,11 @@ exports.sendBookingOTP = async (req, res) => {
 
 exports.bookEvent = async (req, res) => {
     try {
-        const { eventId, otp } = req.body;
+        const { eventId, otp, seatNumber } = req.body;
+
+        if (!seatNumber) {
+            return res.status(400).json({ message: 'Seat selection is required' });
+        }
 
         // Verify OTP explicitly before proceeding
         const validOTP = await OTP.findOne({ email: req.user.email, otp, action: 'event_booking' });
@@ -36,12 +40,19 @@ exports.bookEvent = async (req, res) => {
             return res.status(400).json({ message: 'Already booked or pending' });
         }
 
+        // Verify seat is not already taken
+        const seatTaken = await Booking.findOne({ eventId, seatNumber, status: { $ne: 'cancelled' } });
+        if (seatTaken) {
+            return res.status(400).json({ message: `Seat ${seatNumber} is already reserved or pending approval` });
+        }
+
         const booking = await Booking.create({
             userId: req.user.id,
             eventId,
             status: 'pending',
             paymentStatus: 'not_paid',
-            amount: event.ticketPrice
+            amount: event.ticketPrice,
+            seatNumber
         });
 
         await OTP.deleteOne({ _id: validOTP._id }); // cleanup
@@ -118,6 +129,21 @@ exports.cancelBooking = async (req, res) => {
         }
 
         res.json({ message: 'Booking cancelled successfully' });
+    } catch (error) {
+        res.status(500).json({ message: 'Server Error', error: error.message });
+    }
+};
+
+exports.getOccupiedSeats = async (req, res) => {
+    try {
+        const { eventId } = req.params;
+        // Find all bookings for this event that are confirmed or pending (not cancelled)
+        const bookings = await Booking.find({
+            eventId,
+            status: { $ne: 'cancelled' }
+        }).select('seatNumber status userId');
+        
+        res.json(bookings);
     } catch (error) {
         res.status(500).json({ message: 'Server Error', error: error.message });
     }
