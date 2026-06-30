@@ -7,6 +7,8 @@ const Home = () => {
     const [events, setEvents] = useState([]);
     const [search, setSearch] = useState('');
     const [loading, setLoading] = useState(true);
+    const [viewMode, setViewMode] = useState('list'); // 'list' or 'calendar'
+    const [currentMonth, setCurrentMonth] = useState(new Date());
 
     useEffect(() => {
         const timeoutId = setTimeout(() => {
@@ -24,6 +26,116 @@ const Home = () => {
         } finally {
             setLoading(false);
         }
+    };
+
+    const renderCalendar = () => {
+        const year = currentMonth.getFullYear();
+        const month = currentMonth.getMonth();
+
+        // Month information
+        const firstDayOfMonth = new Date(year, month, 1).getDay(); // 0 is Sunday
+        const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+        const monthNames = [
+            "January", "February", "March", "April", "May", "June",
+            "July", "August", "September", "October", "November", "December"
+        ];
+
+        // Grid cells
+        const calendarCells = [];
+        
+        // Blank cells before the 1st of the month
+        for (let i = 0; i < firstDayOfMonth; i++) {
+            calendarCells.push(null);
+        }
+
+        // Days of the month
+        for (let day = 1; day <= daysInMonth; day++) {
+            calendarCells.push(new Date(year, month, day));
+        }
+
+        // Helper to check if dates are same day
+        const isSameDay = (d1, d2) => {
+            return d1.getFullYear() === d2.getFullYear() &&
+                   d1.getMonth() === d2.getMonth() &&
+                   d1.getDate() === d2.getDate();
+        };
+
+        const handlePrevMonth = () => {
+            setCurrentMonth(new Date(year, month - 1, 1));
+        };
+
+        const handleNextMonth = () => {
+            setCurrentMonth(new Date(year, month + 1, 1));
+        };
+
+        const weekdays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+        return (
+            <div className="rounded-[2rem] border border-white/5 bg-slate-900/40 p-6 md:p-8 shadow-xl backdrop-blur-xl animate-fade-in-scale">
+                {/* Calendar Navigation Header */}
+                <div className="flex items-center justify-between border-b border-white/5 pb-4 mb-6">
+                    <h3 className="text-xl font-bold text-white tracking-tight" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>
+                        {monthNames[month]} {year}
+                    </h3>
+                    <div className="flex gap-2">
+                        <button
+                            onClick={handlePrevMonth}
+                            className="rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-sm font-semibold text-slate-300 hover:border-orange-500/30 hover:bg-orange-500/10 hover:text-orange-400 transition"
+                        >
+                            &larr; Prev
+                        </button>
+                        <button
+                            onClick={handleNextMonth}
+                            className="rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-sm font-semibold text-slate-300 hover:border-orange-500/30 hover:bg-orange-500/10 hover:text-orange-400 transition"
+                        >
+                            Next &rarr;
+                        </button>
+                    </div>
+                </div>
+
+                {/* Calendar Grid */}
+                <div className="grid grid-cols-7 gap-2 md:gap-4">
+                    {/* Weekday labels */}
+                    {weekdays.map(d => (
+                        <div key={d} className="text-center text-xs font-bold uppercase tracking-wider text-slate-500 py-2">
+                            {d}
+                        </div>
+                    ))}
+
+                    {/* Day cells */}
+                    {calendarCells.map((dateObj, idx) => {
+                        if (!dateObj) {
+                            return <div key={`empty-${idx}`} className="h-24 md:h-32 rounded-2xl bg-white/[0.01] border border-transparent" />;
+                        }
+
+                        // Filter events scheduled for this day
+                        const dayEvents = events.filter(event => isSameDay(new Date(event.date), dateObj));
+
+                        return (
+                            <div
+                                key={dateObj.toISOString()}
+                                className="h-24 md:h-32 rounded-2xl border border-white/5 bg-slate-950/20 p-2 md:p-3 flex flex-col justify-between hover:border-white/15 transition group"
+                            >
+                                <span className="text-xs font-bold text-slate-500 group-hover:text-slate-200 transition">{dateObj.getDate()}</span>
+                                <div className="space-y-1 overflow-y-auto max-h-16 md:max-h-20 scrollbar-none">
+                                    {dayEvents.map(event => (
+                                        <Link
+                                            key={event._id}
+                                            to={`/events/${event._id}`}
+                                            className="block rounded-lg bg-orange-500/10 border border-orange-500/20 px-1.5 py-1 text-[9px] font-bold text-orange-400 hover:bg-orange-500 hover:text-slate-950 truncate transition"
+                                            title={event.title}
+                                        >
+                                            {event.title}
+                                        </Link>
+                                    ))}
+                                </div>
+                            </div>
+                        );
+                    })}
+                </div>
+            </div>
+        );
     };
 
     return (
@@ -127,17 +239,35 @@ const Home = () => {
                     <div className="text-xs font-bold uppercase tracking-[0.35em] text-orange-500 mb-1">Explore</div>
                     <h2 className="text-3xl font-black text-white md:text-4xl" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>Upcoming Events</h2>
                 </div>
-                <div className="inline-flex items-center gap-2 rounded-full bg-slate-900 border border-white/10 px-4 py-2 text-xs font-semibold text-slate-300">
-                    <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
-                    {events.length} results found
+                <div className="flex flex-wrap items-center gap-3">
+                    <div className="rounded-2xl border border-white/10 bg-slate-900/50 p-1 flex">
+                        <button
+                            onClick={() => setViewMode('list')}
+                            className={`rounded-xl px-4 py-2 text-xs font-bold transition duration-200 ${viewMode === 'list' ? 'bg-gradient-to-r from-orange-500 to-amber-500 text-slate-950 shadow-md' : 'text-slate-400 hover:text-slate-200'}`}
+                        >
+                            List View
+                        </button>
+                        <button
+                            onClick={() => setViewMode('calendar')}
+                            className={`rounded-xl px-4 py-2 text-xs font-bold transition duration-200 ${viewMode === 'calendar' ? 'bg-gradient-to-r from-orange-500 to-amber-500 text-slate-950 shadow-md' : 'text-slate-400 hover:text-slate-200'}`}
+                        >
+                            Calendar View
+                        </button>
+                    </div>
+                    <div className="inline-flex items-center gap-2 rounded-full bg-slate-900 border border-white/10 px-4 py-2 text-xs font-semibold text-slate-300">
+                        <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
+                        {events.length} results found
+                    </div>
                 </div>
             </div>
 
-            {/* Events Grid */}
+            {/* Events Grid / Calendar View */}
             {loading ? (
                 <div className="text-center py-20 text-xl font-semibold text-slate-400">Loading events...</div>
             ) : events.length === 0 ? (
                 <div className="text-center py-20 text-xl text-slate-500">No events found matching your search.</div>
+            ) : viewMode === 'calendar' ? (
+                renderCalendar()
             ) : (
                 <div className="grid grid-cols-1 gap-8 md:grid-cols-2 xl:grid-cols-3">
                     {events.map((event, index) => (
