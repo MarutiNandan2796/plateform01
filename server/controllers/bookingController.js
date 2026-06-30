@@ -1,6 +1,7 @@
 const Booking = require('../models/Booking');
 const Event = require('../models/Event');
 const OTP = require('../models/OTP');
+const PromoCode = require('../models/PromoCode');
 const { sendBookingEmail, sendOTPEmail } = require('../utils/email');
 
 const generateOTP = () => Math.floor(100000 + Math.random() * 900000).toString();
@@ -19,7 +20,7 @@ exports.sendBookingOTP = async (req, res) => {
 
 exports.bookEvent = async (req, res) => {
     try {
-        const { eventId, otp, seatNumber } = req.body;
+        const { eventId, otp, seatNumber, promoCode } = req.body;
 
         if (!seatNumber) {
             return res.status(400).json({ message: 'Seat selection is required' });
@@ -46,12 +47,30 @@ exports.bookEvent = async (req, res) => {
             return res.status(400).json({ message: `Seat ${seatNumber} is already reserved or pending approval` });
         }
 
+        // Calculate amount with potential promo code discount
+        let finalAmount = event.ticketPrice;
+        if (promoCode) {
+            const promo = await PromoCode.findOne({ code: promoCode.toUpperCase(), isActive: true });
+            if (!promo) {
+                return res.status(400).json({ message: 'Invalid promo code' });
+            }
+            if (new Date(promo.expiryDate) < new Date()) {
+                return res.status(400).json({ message: 'Promo code has expired' });
+            }
+
+            if (promo.discountType === 'percentage') {
+                finalAmount = Math.max(0, event.ticketPrice - (event.ticketPrice * promo.discountValue) / 100);
+            } else if (promo.discountType === 'flat') {
+                finalAmount = Math.max(0, event.ticketPrice - promo.discountValue);
+            }
+        }
+
         const booking = await Booking.create({
             userId: req.user.id,
             eventId,
             status: 'pending',
             paymentStatus: 'not_paid',
-            amount: event.ticketPrice,
+            amount: finalAmount,
             seatNumber
         });
 

@@ -5,6 +5,7 @@ const User = require('./models/User');
 const Event = require('./models/Event');
 const Booking = require('./models/Booking');
 const Review = require('./models/Review');
+const PromoCode = require('./models/PromoCode');
 
 dotenv.config();
 
@@ -93,6 +94,7 @@ const seedDatabase = async () => {
         await Event.deleteMany();
         await Booking.deleteMany();
         await Review.deleteMany();
+        await PromoCode.deleteMany();
         console.log('🗑️  Cleared existing data.');
 
         // Hash user passwords
@@ -204,6 +206,33 @@ const seedDatabase = async () => {
         }
         await Review.insertMany(reviewsData);
         console.log(`💬 Inserted ${reviewsData.length} mock event reviews.`);
+
+        // Seed mock promo codes
+        const promosData = [
+            {
+                code: 'WELCOME100',
+                discountType: 'flat',
+                discountValue: 100,
+                expiryDate: new Date(Date.now() + 60 * 24 * 60 * 60 * 1000), // 60 days
+                isActive: true
+            },
+            {
+                code: 'FESTIVAL20',
+                discountType: 'percentage',
+                discountValue: 20,
+                expiryDate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), // 30 days
+                isActive: true
+            },
+            {
+                code: 'EXPIRED10',
+                discountType: 'percentage',
+                discountValue: 10,
+                expiryDate: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000), // expired 1 day ago
+                isActive: true
+            }
+        ];
+        await PromoCode.insertMany(promosData);
+        console.log(`🎟️  Seeded ${promosData.length} mock promo codes.`);
 
         console.log('\n🚀 Database seeded successfully!');
         console.log('-------------------------------------------');
